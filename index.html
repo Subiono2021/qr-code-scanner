@@ -1,13 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>QR Code Scanner</title>
-  <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+  <script src="https://unpkg.com/html5-qrcode"></script>
   <style>
-    body { font-family: sans-serif; text-align: center; padding: 20px; }
-    #reader { width: 300px; margin: auto; }
-    #result { margin-top: 20px; color: green; font-size: 18px; }
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    #reader {
+      width: 300px;
+      margin: auto;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+      color: green;
+    }
   </style>
 </head>
 <body>
@@ -17,15 +28,24 @@
 
   <script>
     function onScanSuccess(decodedText, decodedResult) {
-      document.getElementById('result').innerText = `📌 Hasil: ${decodedText}`;
+      // Tampilkan hasil ke elemen #result
+      document.getElementById('result').innerText = "Hasil Scan: " + decodedText;
+
+      // Stop scanner setelah berhasil (opsional)
+      html5QrcodeScanner.clear().catch(error => {
+        console.error('Stop gagal', error);
+      });
     }
 
     function onScanFailure(error) {
-      // Bisa dikosongkan atau digunakan untuk debug
+      // Tidak ditampilkan agar tidak mengganggu
     }
 
     let html5QrcodeScanner = new Html5QrcodeScanner(
-      "reader", { fps: 10, qrbox: 250 });
+      "reader", {
+        fps: 10,
+        qrbox: 250
+      });
     html5QrcodeScanner.render(onScanSuccess, onScanFailure);
   </script>
 </body>
